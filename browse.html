@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Items - ReWear</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><a href="index.html">ReWear</a></h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="browse.html" class="nav-link active">Browse</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <div class="nav-buttons">
+                    <button class="btn btn-outline" onclick="openModal('loginModal')">Login</button>
+                    <button class="btn btn-primary" onclick="openModal('registerModal')">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Browse Content -->
+    <main class="browse-main">
+        <div class="container">
+            <!-- Search and Filters -->
+            <div class="browse-header">
+                <h1>Browse Items</h1>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search items..." id="searchInput">
+                    <button onclick="searchItems()"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="categories">
+                <button class="category-btn active" onclick="filterItems('all')">All</button>
+                <button class="category-btn" onclick="filterItems('tops')">Tops</button>
+                <button class="category-btn" onclick="filterItems('bottoms')">Bottoms</button>
+                <button class="category-btn" onclick="filterItems('dresses')">Dresses</button>
+                <button class="category-btn" onclick="filterItems('accessories')">Accessories</button>
+            </div>
+
+            <!-- Items Grid -->
+            <div class="items-grid" id="browseItemsGrid">
+                <!-- Items populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBrowseItems();
+        });
+
+        function loadBrowseItems() {
+            const grid = document.getElementById('browseItemsGrid');
+            if (window.ReWear && window.ReWear.itemsData) {
+                window.ReWear.displayItems(window.ReWear.itemsData);
+            }
+        }
+
+        function searchItems() {
+            const query = document.getElementById('searchInput').value;
+            if (window.ReWear && window.ReWear.searchItems) {
+                window.ReWear.searchItems(query);
+            }
+        }
+    </script>
+</body>
+</html>

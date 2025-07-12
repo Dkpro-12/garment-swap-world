@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ReWear</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><a href="index.html">ReWear</a></h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="browse.html" class="nav-link">Browse</a>
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="#" class="nav-link">Messages</a>
+                <div class="nav-buttons">
+                    <div class="user-menu">
+                        <div class="user-avatar" onclick="toggleUserMenu()">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info">
+                                <span id="userName">John Doe</span>
+                                <small id="userLocation">New York, NY</small>
+                            </div>
+                            <a href="#" onclick="editProfile()">Edit Profile</a>
+                            <a href="#" onclick="logout()">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Dashboard</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#overview" class="sidebar-link active" onclick="showSection('overview')">
+                    <i class="fas fa-chart-bar"></i>
+                    Overview
+                </a>
+                <a href="#my-items" class="sidebar-link" onclick="showSection('my-items')">
+                    <i class="fas fa-tshirt"></i>
+                    My Items
+                </a>
+                <a href="#exchanges" class="sidebar-link" onclick="showSection('exchanges')">
+                    <i class="fas fa-exchange-alt"></i>
+                    Exchanges
+                </a>
+                <a href="#favorites" class="sidebar-link" onclick="showSection('favorites')">
+                    <i class="fas fa-heart"></i>
+                    Favorites
+                </a>
+                <a href="#messages" class="sidebar-link" onclick="showSection('messages')">
+                    <i class="fas fa-comments"></i>
+                    Messages
+                </a>
+                <a href="#settings" class="sidebar-link" onclick="showSection('settings')">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section active">
+                <div class="section-header">
+                    <h2>Welcome back, <span id="welcomeName">John</span>!</h2>
+                    <button class="btn btn-primary" onclick="openModal('addItemModal')">
+                        <i class="fas fa-plus"></i> Add New Item
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalItems">5</h3>
+                            <p>Items Listed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalExchanges">12</h3>
+                            <p>Successful Exchanges</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalViews">248</h3>
+                            <p>Profile Views</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="userRating">4.8</h3>
+                            <p>Rating</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="actions-grid">
+                        <div class="action-card" onclick="openModal('addItemModal')">
+                            <i class="fas fa-plus-circle"></i>
+                            <h4>Add Item</h4>
+                            <p>List a new item for exchange</p>
+                        </div>
+                        <div class="action-card" onclick="window.location.href='browse.html'">
+                            <i class="fas fa-search"></i>
+                            <h4>Browse Items</h4>
+                            <p>Find items to exchange</p>
+                        </div>
+                        <div class="action-card" onclick="showSection('messages')">
+                            <i class="fas fa-comments"></i>
+                            <h4>Check Messages</h4>
+                            <p>View your conversations</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <!-- Activity items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Items Section -->
+            <section id="my-items" class="dashboard-section">
+                <div class="section-header">
+                    <h2>My Items</h2>
+                    <button class="btn btn-primary" onclick="openModal('addItemModal')">
+                        <i class="fas fa-plus"></i> Add New Item
+                    </button>
+                </div>
+
+                <!-- Items Filter -->
+                <div class="items-filter">
+                    <button class="filter-btn active" onclick="filterMyItems('all')">All Items</button>
+                    <button class="filter-btn" onclick="filterMyItems('available')">Available</button>
+                    <button class="filter-btn" onclick="filterMyItems('exchanged')">Exchanged</button>
+                    <button class="filter-btn" onclick="filterMyItems('pending')">Pending</button>
+                </div>
+
+                <!-- My Items Grid -->
+                <div class="my-items-grid" id="myItemsGrid">
+                    <!-- Items will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Exchanges Section -->
+            <section id="exchanges" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Exchange History</h2>
+                </div>
+
+                <div class="exchanges-list" id="exchangesList">
+                    <!-- Exchanges will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Favorites Section -->
+            <section id="favorites" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Favorite Items</h2>
+                </div>
+
+                <div class="favorites-grid" id="favoritesGrid">
+                    <!-- Favorites will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section id="messages" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Messages</h2>
+                </div>
+
+                <div class="messages-container">
+                    <div class="conversations-list" id="conversationsList">
+                        <!-- Conversations will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Account Settings</h2>
+                </div>
+
+                <div class="settings-content">
+                    <div class="settings-card">
+                        <h3>Profile Information</h3>
+                        <form id="profileForm">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="profileName" value="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="profileEmail" value="john@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" id="profileLocation" value="New York, NY">
+                            </div>
+                            <div class="form-group">
+                                <label>Bio</label>
+                                <textarea id="profileBio" rows="3" placeholder="Tell others about yourself..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Preferences</h3>
+                        <div class="preference-item">
+                            <label>Email Notifications</label>
+                            <input type="checkbox" id="emailNotifications" checked>
+                        </div>
+                        <div class="preference-item">
+                            <label>SMS Notifications</label>
+                            <input type="checkbox" id="smsNotifications">
+                        </div>
+                        <div class="preference-item">
+                            <label>Marketing Emails</label>
+                            <input type="checkbox" id="marketingEmails">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div id="addItemModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeModal('addItemModal')">&times;</span>
+            <h2>Add New Item</h2>
+            <form id="addItemForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Item Title *</label>
+                        <input type="text" id="itemTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="itemCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="tops">Tops</option>
+                            <option value="bottoms">Bottoms</option>
+                            <option value="dresses">Dresses</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Size *</label>
+                        <input type="text" id="itemSize" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Condition *</label>
+                        <select id="itemCondition" required>
+                            <option value="">Select Condition</option>
+                            <option value="Like New">Like New</option>
+                            <option value="Excellent">Excellent</option>
+                            <option value="Very Good">Very Good</option>
+                            <option value="Good">Good</option>
+                            <option value="Fair">Fair</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea id="itemDescription" rows="4" required placeholder="Describe your item..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Photos</label>
+                    <div class="file-upload">
+                        <input type="file" id="itemPhotos" multiple accept="image/*">
+                        <div class="upload-placeholder">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload photos or drag and drop</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Exchange Preferences</label>
+                    <textarea id="exchangePreferences" rows="2" placeholder="What would you like to exchange for?"></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('addItemModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">List Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
